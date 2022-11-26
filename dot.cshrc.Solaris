@@ -1,0 +1,3 @@
+alias df	df -kh
+alias ps	/usr/ucb/ps
+alias ll	ls -Fla

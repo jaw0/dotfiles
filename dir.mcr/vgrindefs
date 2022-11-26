@@ -1,0 +1,226 @@
+# Jeff's modified version of vgrindefs
+# taken from: @(#)vgrindefs.src 1.13 89/11/01 SMI
+#
+
+pascal|pasc|p:\
+	:pb=(^\d?procedure|function|program\d\p\d|\(|;|\:)|(=\d?record\d):\
+	:bb=\dcase|begin\d:be=\dend|forward\d|;:\
+	:cb={:ce=}:\
+	:ab=\(*:ae=*\):\
+	:sb=':se=':\
+	:kw=and array assert begin case const div do downto else end file for\
+	forward function goto if in label mod nil not of or packed procedure\
+	program record repeat set then to type until var while with oct hex\
+	external:
+C|c:\
+	:pb=^\d?*?\d?\p\d?\(\a?\)(\d|{):bb={:be=}:cb=/*:ce=*/:sb=":se=\e":lb=':\
+	:le=\e':tl:\
+	:kw=asm auto break case char continue default do double else enum\
+	extern float for fortran goto if int long register return short\
+	sizeof static struct switch typedef union unsigned void while #define\
+	#else #endif #if #ifdef #ifndef #include #undef # define endif\
+	ifdef ifndef include undef defined:
+
+SH|sh:\
+	:pb=(;|^)\d?\p\(\)(\d|{):\
+	:ab=\$#:ae=(\d?|\a?):\
+	:bb={:be=}:cb=#:ce=$:sb=":se=\e":lb=':\
+	:le=\e':tl:\
+	:kw=break case cd continue do done \
+	elif else esac eval exec exit export \
+	fi for if in then while until \
+	read readonly set shift test trap umask wait:
+CSH|csh:\
+	:cb=#:ce=$:sb=":se=\e":lb=':\
+	:ab=\$\a?#:ae=(\d?|\a?):\
+	:le=\e':tl:\
+	:kw=alias alloc break breaksw case cd chdir continue default\
+	echo else end endif endsw exec exit foreach \
+	glob goto history if logout nice nohup onintr repeat set\
+	setenv shift source switch then time \
+	while umask unalias unset wait while @ env \
+	argv child home ignoreeof noclobber noglob \
+	nomatch path prompt shell status verbose :
+
+ratfor|rat|r:\
+	:pb=(subroutine|function)\d\p\d?\(\a?\):\
+	:bb=(subroutine|function)\d\p\d?\(\a?\):be=^\d?end:\
+	:cb=#:ce=$:\
+	:sb=":se=\e":lb=':le=\e':oc:\
+	:kw=DRETURN DRIVER arith break case character default define do\
+	else elsedef enddef filedes for function goto if ifdef ifelse\
+	ifnotdef include incr integer linepointer next opeq pointer\
+	real repeat return select string subroutine substr until:
+modula2|mod2|m2:\
+	:pb=(^\d?(procedure|function|module)\d\p\d|\(|;|\:):\
+	:bb=\d(begin|case|for|if|loop|record|repeat|while|with)\d:\
+	:be=\dend|;:\
+	:cb={:ce=}:\
+	:ab=\(*:ae=*\):\
+	:sb=":se=":\
+	:oc:\
+	:kw=and array begin by case const\
+	definition div do else elsif end exit export\
+	for from if implementation import in\
+	loop mod module not of or pointer procedure qualified\
+	record repeat return set then to type\
+	until var while with:
+yacc|Yacc|y:\
+	:cb=/*:ce=*/:sb=":se=\e":lb=':le=\e':tl:\
+	:kw=%{ %} %% %union %token %type\
+	#else #endif #if #ifdef #ifndef #include #undef # define else endif\
+	if ifdef ifndef include undef:
+C++|c++:\
+	:pb=^\d?*?\d?\p\d?\(\a?\)(\d|{):bb={:be=}:cb=/*:ce=*/:ab=//:\
+	:ae=$:sb=":se=\e":lb=':\
+	:le=\e':tl:\
+	:kw=asm auto break case char continue default do double else enum\
+	extern float for fortran goto if int long register return short\
+	sizeof static struct switch typedef union unsigned while void #define\
+	#else #endif #if #ifdef #ifndef #include #undef # define endif\
+	ifdef ifndef include undef defined\
+	class const delete friend inline new operator overload private\
+	protected public virtual:
+fortran|FORTRAN|f77|fc|f:\
+	:pb=(function|subroutine|program|entry)\d\p\d?\(\a?\):\
+	:bb=(function|subroutine|program)\d\p\d?\(\a?\):be=^\dend:\
+	:cb=^c:\
+	:ce=$:\
+	:sb=':\
+	:se=':\
+	:oc:\
+	:kw=call common complex continue dimension do double else elseif\
+	end endif equivalence format function entry\
+	goto if include integer \
+	parameter precision real return stop subroutine:
+#
+# This entry makes use of new capabilities added to support the description
+# of lisp-like languages (id, pl, and px).  The set of keywords given is a
+# matter of taste.  It would be reasonable to add all the wired functions to
+# the list.
+MLisp|ml|Emacs Mock Lisp:\
+	:cb=;:ce=$:lb=':le=\e':sb=":se=\e":bb=\(:be=\):\
+	:id=_-$#@./,%&?!^*+~`|;<>'\::\
+	:kw=defun if progn while:pl:px=\d\(defun:pb=^\d\(\p($|(\d\a$)):
+
+i48|48|mcs-48|MCS-48|8048|intel MCS-48 assembly:\
+	:pb=^\p\::bb=^\p\::be=^$:\
+	:cb=;:ce=$:sb=":se=":tl:oc:kw=add addc anl orl xrl inc dec clr cpl\
+	da swap rl rr rlc rrc in outp ins outl movd orld anld jmp jmpp\
+	djnz jc jnc jz jnz jt0 jnt0 jt1 jnt1 jf0 jf1 jtf jni jb0 jb1\
+	jb2 jb3 jb4 jb5 jb6 jb7 call ret retr mov xch xchd movx movp\
+	movp3 strt stop en dis sel ent0 tbo rb1 mb0 mb1 nop\
+	equ .org org dfb dfs .byte .word .long .enum .ascii .asciz\
+	.skip .align .proc .even .globl .abort .near .hex .bin .s19\
+	.symtab .symlocal db dw dfw :
+
+# should SFRs be included as reserved words?
+# They _aren't_ included here
+i96|96|mcs-96|MCS-96|8096|intel MCS-96 assembly:\
+	:pb=^\p\::bb=^\p\::be=^$:\
+	cb=;:ce=$:sb=":se=":tl:oc:kw=org dfs dfb equ \
+	.org .proc .enum .skip .byte .word .ascii .asciz \
+	.align .long .even .globl .abort .near .hex .bin .s19 \
+	.symtab .symlocal \
+	add addb addc addcb sub subb subc subcb cmp cmpb\
+	mul mulb mulu mulub div divb divu divub and andb\
+	or orb xor xorb ld ldb st stb ldbse ldbze push pop\
+	pushf popf pusha popa sjmp ljmp jmp br scall lcall call\
+	ret jc jnc je jne jge jlt jgt jle jh jnh jv jnv jvt jnvt\
+	jst jnst jbs jbc djnz djnzw dec decb neg negb inc incb\
+	ext extb not notb clr clrb shl shlb shll shr shrb shrl\
+	shra shrab shral setc clrc clrvt rst di ei nop skip\
+	norml trap ipld cmpl bmov:
+
+# the following taken from the net
+# syntax is for the author's own asm'bler
+# I'll likely fix it up later (RSN)
+i51|mcs-51|MCS-51|intel 8051 assembly:\
+	:bb=\::be=\dret|jmp|ajmp|sjmp|ljmp|reti\d|;:\
+	:oc:\
+	:lb=':le=':\
+	:sb=":se=":\
+	:cb=;;:ce=$:\
+        :kw=ds rb rw db byte dw word org at seg end global public\
+        extern include if else equ set high low by code xdata data sft bit\
+	acall add addc ajmp anl cjne clr cpl da dec div djnz inc jb jbc jc\
+	jmp jnb jnc jnz jz lcall ljmp mov movc movx mul nop orl pop push\
+	ret reti rl rlc rr rrc setb sjmp subb swap xch xchd xrl:
+
+i86|i88|86|88|iapx86|asm|intel 80x86 assembly:\
+	:pb=^\p\::pe=\dret|jmp|iret\d|;:\
+	:oc:\
+	:lb=':le=':\
+	:sb=":se=":\
+	:cb=;:ce=$:\
+	:kw=mov cmp add sub mul div push pop not shl shr\
+	inc dec loop or and xor in out\
+	int jmp call ret iret jc jb jnc jnb jz jnz jo jno jpo jpe js jns\
+	hlt cli cld sti clc stc\
+	db dw #define #undef #include \.org
+	
+
+
+hc11|11|68hc11|Motorola 68HC11 assembly:\
+	:pb=^\p\::bb=^\p\::be=^$:\
+	cb=;:ce=$:sb=":se=":tl:oc:\
+	kw=org equ bsz fcb fcc fdb fill rmb zmb\
+	aba abx aby adc add addd and asl asld asr bcc bclr bcs beq\
+	bge bgt bhi bhs bit ble blo bls blt bmi bne bpl bra brclr\
+	brn brset bset bsr bvc bvs cba clc cli clr clv cmp com cpd\
+	cpx cpy daa dec des dex dey eor fdiv idiv inc ins inx iny\
+	jmp jsr lda ldd lds ldx ldy lsl lsld lsr lsrd mul neg nop\
+	ora psh pshx pshy pul pulx puly rol ror rti rts sba sbc\
+	sec sei sev sta std stop sts stx sty sub subd swi tab tap\
+	tba test tpa tst tsx tsy txs tys wai xgdx xgdy:
+
+#Jeff's own Lisp interpreter
+JLisp|jl|jlisp|Jeffs Lisp:\
+	:cb=;:ce=$:\
+	:ab=\#\|:ae=\|\#:\
+	:bb=\(:be=\):\
+	:sb=":se=\e":\
+	:id=_-$#@./,%&?!^*+~`|;<>'\::\
+	:pb=(defun|defmac)\d\p:\
+	:px=(defun|defmac)\d\p:\
+	:kw=define defun defmac if progn while set! or and not\
+	cons car cdr set-car! set-cdr! #t #f let let\* cond eq equal\
+	list catch throw lambda macro consp nullp definedp boundp\
+	zerop nnullp nboundp ndefinedp\
+	assq assoc memq member length
+
+# perl 4
+# perl:\
+# 	  :pb=^\d?(sub|package)\d\p\d:\
+# 	  :id=$%@_:\
+# 	  :bb=\e{:be=\e}:cb=\d\e#:ce=$:sb=\e":se=\e":\
+# 	  :kw=accept alarm atan2 bind binmode caller chdir chmod chop \
+# 	  chown chroot close closedir connect continue cos crypt defined delete \
+# 	  die do dump each else elsif eof eval exec exit exp fcntl fileno flock \
+# 	  for foreach fork format getc gmtime goto grep hex if include index int \
+# 	  ioctl join keys kill last length link listen local localtime log lstat \
+# 	  m mkdir next oct open opendir ord pack package pipe pop print printf \
+# 	  push q qq qx rand read readdir readlink recv redo rename require reset \
+# 	  return reverse rewinddir rindex rmdir s scalar seek seekdir select send \
+# 	  shift shutdown sin sleep socket socketpair sort splice split sprintf \
+# 	  sqrt srand stat study sub substr symlink syscall sysread system \
+# 	  syswrite tell telldir time times tr truncate umask undef unless unlink \
+# 	  unpack unshift until utime values vec wait waitpid wantarray warn while \
+# 	  write y: 
+#  
+
+PERL|perl|Perl:\
+    :pb=^\d?(sub|package)\d\p\d:\
+    :bb={:be=}:cb=#:ce=$:sb=":se=\e":lb=':\
+    :le=\e':tl:\
+    :id=_:\
+    :kw=\
+    if for foreach unless until while continue else elsif \
+    do eval require \
+    die exit \
+    defined delete reset exists \
+    goto last redo next dump \
+    local undef return my our \
+    write format print \
+    sub package
+

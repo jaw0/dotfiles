@@ -1,0 +1,67 @@
+#!/usr/local/bin/perl
+# -*- perl -*-
+
+# Copyright (c) 2002 by Jeff Weisberg
+# Author: Jeff Weisberg <jaw @ tcp4me.com>
+# Date: 2002-Mar-27 11:10 (EST)
+# Function: get a webpage
+
+use Net::HTTP;
+use Net::HTTPS;
+use LWP;
+use HTTP::Request;
+use Time::HiRes 'time';
+use Getopt::Std;
+use strict;
+
+my %opt;
+getopts('vhgpc:tu:', \%opt);
+
+my $method = $opt{p} ? "POST" : ($opt{h} ? "HEAD" : "GET");
+
+my $start = time();
+
+foreach my $url (@ARGV){
+    my($s,$l) = webgrab( $url, $method, $opt{c});
+
+    if( $s ){
+	print STDERR "$s\n";
+    }else{
+	print $l;
+    }
+}
+
+my $elaps = time() - $start;
+print STDERR "elapsed: $elaps\n" if $opt{t};
+
+
+sub webgrab {
+    my $url    = shift;
+    my $meth   = shift;
+
+    my($proto, $host, $file) = $url =~ m|([^:]+)://([^/]+)(.*)|;
+
+    my $s;
+
+    if( $proto eq 'https' ){
+        $s = Net::HTTPS->new(Host => $host) || die $@;
+    }else{
+        $s = Net::HTTP->new( Host => $host) || die $@;
+    }
+
+    my @req = ($meth, $file);
+    push @req, 'User-Agent', $opt{u} if $opt{u};
+
+    my $req = $s->format_request( @req );
+    print STDERR $req if $opt{v};
+
+    $s->write_request( @req );
+
+    my $res;
+    while(my $line = <$s>) {
+        $res .= $line;
+    }
+
+    return(undef, $res);
+
+}

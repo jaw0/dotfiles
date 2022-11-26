@@ -1,0 +1,43 @@
+
+# permit building nb-src
+setenv USETOOLS no
+
+
+# switch ( `tty` )
+#   case "/dev/ttyE*":
+#   case "/dev/console":
+#     set T = `tty | sed s%/dev/ttyE%%`
+#     setenv DISPLAY :$T
+#
+#     if( $T == 0 ) then
+# 	set RES = ""
+#     else
+# 	echo "1) 24 bit"
+# 	echo "2) 16 bit"
+# 	echo "3)  8 bit"
+# 	echo -n "choose: "
+# 	switch ($<)
+# 	  case "1":
+# 	    set RES = "-bpp 24"
+# 	    breaksw
+# 	  case "2":
+# 	    set RES = "-bpp 16"
+# 	    breaksw
+# 	  case "3":
+# 	    set RES = "-bpp 8"
+# 	    breaksw
+# 	  case 'x':
+#           default:
+# 	    echo "not starting X"
+# 	    breaksw
+# 	endsw
+#     endif
+#     if ( $?RES ) then
+# 	echo "starting X, ($RES $DISPLAY)..."
+# 	sleep 2
+# 	startx -- $RES $DISPLAY >& foo.$T
+# 	# xinit -- $RES $DISPLAY >& foo.$T
+#     endif
+#
+#   default:
+# endsw

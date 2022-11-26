@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# Author: Jeff Weisberg <jaw @ tcp4me.com>
+# install symlinks for dotfiles
+
+DOTDIR=dotfiles
+BKPDIR=dotfiles.old
+
+cd $HOME
+[ -d $BKPDIR ] || mkdir $BKPDIR
+
+
+for file in $DOTDIR/*; do
+    nfile=''
+    bfile=`echo $file | sed "s|^$DOTDIR/||"`
+    lfile=$file
+
+    case $bfile in
+
+        dot.*)
+            nfile=`echo $bfile | sed 's/^dot//'`	# dot.file  => .file
+            ;;
+        dir.*)
+            nfile=`echo $bfile | sed 's/^dir\.//'`	# dir.name  => name
+            ;;
+        bin.*)
+            [ -d bin ] || mkdir bin
+            lfile=../$file
+            nfile=`echo $bfile | sed 's/^bin\./bin\//'`	# bin.name  => bin/name
+            ;;
+
+    esac
+
+    # ignore other files
+    [ -z "$nfile" ] && continue;
+
+    echo $file "=>" $nfile
+
+
+    # make backup copy if the file is not a symlink
+    [ \( -f $nfile -o -d $nfile \) -a ! -h $nfile ] && mv -f $nfile $BKPDIR/
+
+    # remove old link
+    [ -f $nfile -o -d $nfile -o -h $nfile ] && rm -f $nfile
+
+    ln -s $lfile $nfile
+
+done
+

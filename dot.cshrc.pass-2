@@ -1,0 +1,80 @@
+#
+# Author: Jeff Weisberg <jaw @ tcp4me.com>
+# Function: csh .startup
+#
+# part 2 of .cshrc
+# to be sourced after $term has been set
+
+if( ! $?term  ) exit
+if ( ! $?xterm ) then
+    set xterm = $term
+endif
+# if( ! $?xterm ) exit
+
+set PASS2 = "Yep"
+
+# where to put directory? (and how) title bar if we have one, else in prompt
+# if possible, make the prompt a different color when root
+
+switch ( $xterm )
+
+  case "vt100":
+  case "xterm":
+  case "xterm-color":
+  case "xterm-256color":
+	if( $?tcsh ) then
+		if ( `whoami` == root ) then
+			set foo = `echo "$prompt" | sed 's/ //'`
+			set prompt = "%{[1;31m$foo[0m%} "
+		else
+			set prompt = 	"%B$prompt%b"
+		endif
+	else
+		if ( `whoami` == root ) then
+			set prompt = 	"[1;31m$prompt[0m"
+		else
+			set prompt = 	"[1m$prompt[0m"
+			# set prompt  = "[1;36m$prompt[0m"
+		endif
+	endif
+	breaksw
+
+  default:
+endsw
+
+
+switch ( $xterm )
+  case "sun-cmd":
+	alias _cdt  'echo -n "]l${cwd}\]L${cwd:t}\"'
+	alias refresh   'echo -n "[7t"'
+	breaksw
+
+  case "vt100":
+	alias _cdt 'echo -n "7[25;1H[2K [1;31m${cwd}[0m 8"'
+	breaksw
+
+  case "xterm":
+	if( -f ~/bin/xtermbanner_cdt ) then
+		alias _cdt 'xtermbanner_cdt $host $cwd ; echo -n "]1;${cwd:t}"'
+	else
+		alias _cdt 'echo -n "]2;${host} : ${cwd}]1;${cwd:t}"'
+	endif
+	alias refresh	'echo -n "c"'
+	breaksw
+
+  case "xterm-color":
+  case "xterm-256color":
+	if( -f ~/bin/xtermbanner_cdt ) then
+		alias _cdt 'xtermbanner_cdt $host $cwd'
+	else
+		alias _cdt 'echo -n "]2;${host} : ${cwd}"'
+	endif
+	alias refresh	'echo -n "c"'
+	breaksw
+
+  default:
+	alias _cdt	'set prompt = "$host-$devtty-`whoami` {$cwd:t} \\!$percent "'
+endsw
+
+_cdt
+

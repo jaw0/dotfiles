@@ -1,0 +1,12 @@
+
+if ( -f /usr/local/share/lib/.Baselogout ) then
+	# magoo
+	source /usr/local/share/lib/.Baselogout
+else if ( -f /usr/local/lib/Base.logout ) then
+	# elsewhere
+	source /usr/local/lib/Base.logout
+else
+	#
+	clear
+	echo "`whoami` Logged off `hostname`:`tty` On `date`"
+endif
