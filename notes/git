@@ -1,0 +1,51 @@
+# -*- mode: org -*-
+
+* git
+
+** revisions
+
+HEAD~       commit before HEAD
+HEAD^       commit before HEAD
+
+HEAD~~      2 commits before HEAD
+HEAD^^      2 commits before HEAD
+HEAD~2      2 commits before HEAD
+HEAD^2      2nd parent of merge commit of HEAD
+
+# ~~~ == ~3
+# ~~~ == ^^^
+# ^^^ != ~3
+
+
+HEAD@{1}    previous HEAD in reflog
+HEAD@{yesterday} where HEAD was yesterday in the reflog
+
+** range of commits
+
+master..feature     commits on feature branch since fork
+feature..master     commits on master since fork
+master..            defaults to HEAD
+master...feature    commits on both branches since fork
+
+** cmds
+*** reset
+    - --mixed	- leave files,  clear index, move tip [mixed = default]
+    - --soft	- leave files,  keep index,  move tip
+    - --hard	- remove files, clear index, move tip *destructive!*
+
+
+*** rebase
+**** to squash current branch
+    - rebase -i --keep-base
+      change 'pick' -> squash|fixup on all but the first
+
+**** squash all
+    - git reset $(git commit-tree HEAD^{tree}
+
+    HEAD^{tree} = tree object cooresponding to HEAD
+    commit-tree = create a new orphaned commit from the specified tree
+
+** remote
+git remote add github git@github.com:jaw0/reponame.git
+git push -u github branch
+

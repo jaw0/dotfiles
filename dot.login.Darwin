@@ -1,0 +1,7 @@
+
+set darwin_version = `uname -r | sed 's/\..*//'`
+
+if( $darwin_version < 12 ) then
+    setenv DISPLAY :0
+endif
+

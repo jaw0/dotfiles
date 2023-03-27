@@ -1,0 +1,44 @@
+#!/usr/local/bin/perl
+
+use strict;
+
+my $BPL = 16;		    # bytes per line
+my $GPL = 4;		    # groups of bytes per line
+my $GRP = $BPL * 2 / $GPL;  # num chars per group
+my $TLN = $BPL * 2 + $GPL;  # num chars total in hex portion
+
+my $off = 0;	# current offset
+
+push @ARGV, '-' unless @ARGV;
+
+for my $f (@ARGV){
+
+    my $s;
+    if( $f eq '-' ){
+        $s = \*STDIN;
+    }else{
+        open($s, '<', $f) || die "cannot open '$f': $!\n";
+    }
+
+    while(1){
+        # read 16 bytes at a time, until eof
+        my $n = read($s, my $buf, $BPL);
+        last unless $n;
+        hexdump($buf, $off);
+        $off += $n;
+        last unless $n == $BPL;
+    }
+}
+
+sub hexdump {
+    my $buf = shift;
+    my $off = shift;
+
+    (my $txt = $buf) =~ tr/\040-\176/./c;   # replace non-printable chars with dot (.)
+    $buf = unpack('H*', $buf);	  	    # convert to hex
+    $buf =~ s/(.{$GRP})/\U$1 /g;            # add spaces, upcase
+
+    printf "%08x:  %-${TLN}s %s\n", $off, $buf, $txt;
+}
+
+

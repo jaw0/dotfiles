@@ -1,0 +1,34 @@
+
+# add to ~/.gitconfig:
+# [include]
+#         path = ~/dotfiles/git-common.include
+
+
+[core]
+        excludesfile = ~/dotfiles/git-ignore
+	editor = emacs -nw
+	pager = less -FRX
+[pull]
+        rebase = true
+[diff]
+        algorithm = histogram
+[color]
+	ui = always
+[init]
+        defaultBranch = master
+[format]
+        # trunc adds '..', %x08%x08 backspaces over them, leaving 4 chars
+        pretty = tformat:%C(auto)%h%C(reset) %as %<(6,trunc)%al%x08%x08 %C(auto)%d%C(reset) %C(blue bold)%s%C(reset)
+[alias]
+	glog = log --all --graph
+        slog = log --all --stat
+        bgd = diff --stat
+        s = status -uno .
+        co = checkout
+        au = add -u
+        br = branch
+        com = commit
+        unstage = reset
+        uncommit = reset HEAD~
+        amend = commit --amend --no-edit
+        squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-A new start}\");};f"

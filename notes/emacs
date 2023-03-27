@@ -1,0 +1,485 @@
+# -*- mode: org -*-
+
+* Emacs
+
+** Commands
+C-x r s|i X             copy/yank reg
+C-x t n/o               tabs
+C-x C-+/-/=/0           zoom
+C-x h                   mark entire bufferx
+C-M-h			mark function
+C-M-@                   mark sexp
+
+M-w                     copy region
+M-/                     dabbrev expand
+M-<spc>                 hippie expand   [non-std binding]
+C-x C-x                 swap point/mark
+C-x spc                 region -> rect
+M-;			comment/uncomment region/dwim
+C-x z                   repeat last command
+
+M-y                     choose yank
+C-u C-<spc>             goto mark
+C-x 8 <ret>             unicode
+
+C-x n n                 narrow to region
+C-x n d                 narrow to function
+C-x n w                 widen (un-narrow)
+
+C-x 4 c                 clone indirect buffer
+C-x 4 1                 next command in same window
+
+C-x 5 2		        new frame
+C-x 5 0                 close this frame
+C-x 5 o                 switch frame
+
+C-x r N                 number rect
+C-x v ~                 visit file on different git branch
+C-x v =                 show git diff
+C-c C-f f               go - goto top of func
+C-x x f                 fontify update
+C-x x t                 toggle truncate/wrap long lines
+C-u C-x =               what is this, at point
+
+C-.                     flyspell-auto-correct-word
+C-c $                   flyspell-correct-word-before-point
+
+M-s .                   isearch for symbol at point
+M-s o                   search 'occur mode'
+M-s h r/u               highlight(unhighlight) regexp
+C-M-%                   query replace regex
+M-%                     query replace string    [cannot on mac -> \e% or remap?]
+
+⌘ ^ [space]             (mac) emoji/symbol entry
+C-\                     use fancy input method; [M-x set-input-method]
+
+C-c ! l                 flycheck list errors
+C-c ! n/p               flycheck next/prev error
+
+flush-lines             delete lines matching regex
+lgrep                   grep directory
+rgrep                   grep directory recurively
+diff-buffer-with-file
+
+
+* Modes
+** TODO use more of
+- org
+- org-brain
+- calc
+- tab-bar
+- minimap
+- rgrep
+- doom modeline
+    https://github.com/seagle0128/doom-modeline
+- svg-tag-mode / -lib
+    https://www.reddit.com/r/emacs/comments/td9t7w/enhanced_my_coding_experience_with_svgtagmode/
+    https://github.com/rougier/svg-lib
+- straight package manager
+    https://github.com/radian-software/straight.el
+    https://github.com/rougier/dotemacs/blob/master/dotemacs.org
+- https://github.com/minad/org-modern
+- origami
+    https://github.com/gregsexton/origami.el
+- literate-calc-mode
+
+
+* Mac
+Finder -> Emacs -> GetInfo -> above/below camera notch
+or tab-bar? or ...?
+
+* X
+src/xterm comment out XNoOp()
+
+* Mode Ref
+** term
+        C-c C-j         switch to line mode
+        C-c C-k         switch to char mode
+        C-C C-c         send a C-c
+        C-c [any]       do C-x [any]
+                C-c k   kill buffer
+                C-c o   other buffer
+
+** calc
+
+        &               1/x
+        A               abs
+        B               log_x(y)
+        E               exp
+        H E             10^x
+        L               ln
+        H L             log base10
+        Q               sqrt
+
+        C               cos
+        S               sin
+        T               tan
+
+        F               floor
+        I F             ceil
+        R               round
+        P               pi
+
+        n               negate
+        m d             degrees mode
+        m r             radians mode
+        m s             symbolic mode
+        d 0             decimal
+        d 6             hex
+        d 2             binary
+        I               inverse [IS = arcsin, ...]
+        H               hyperbolic
+        \               integer div
+        :               fraction div
+        ^               power
+        a &,|,!         logical and/or/not
+
+        2#1101          number, any base
+        1:2             fraction
+        30@ 90' 15"     deg min sec
+        (r, i)          complex
+        (m; a)          polar
+        [1,2,3; 4,5,6]  matrix
+        [1..3)          range
+        [ ]             vector
+
+        c F             to fraction
+        c f             to float
+        c d             to degrees
+        c r             to radians
+        c h             to deg/hrs, min, sec
+        p               precision
+
+        U               undo
+        N               eval to number
+
+        k n             next prime
+        k f             prime factors
+        k g             gcd
+        k l             lcm
+
+** org
+        tab             toggle visibility - item
+        S-tab           toggle visibility - all
+        C-c C-t         todo/done
+        C-c C-c         checkbox
+        S-left/right    cycle state
+        M-left/right    promote/demote heading
+        C-ret           new heading
+        M-return        add another thing
+        M-S-ret         new checkbox, new todo
+        C-c .           add date
+        C-c !           add date - inactive
+        C-c C-z         create note
+        C-C C-s         add schedule
+        C-C C-d         add deadline
+
+        C-c C-x C-v     toggle display inline images
+        C-c C-x C-i     start clock
+        C-c C-x C-o     stop clock
+        C-c C-x C-x     restart clock
+        C-c C-x C-q     abort clock
+
+        C-C C-o         capture
+        C-C C-l         save link/insert link
+        C-C C-M-l       insert all links
+
+** magit
+
+        C-x M-g j       magit status window
+        C-c M-g         magit file dispatcher
+
+        q               quit
+        ?               help menu
+        s               stage
+        u               unstage
+        c               commit
+                C-c C-c commit
+                C-C C-k abort commit
+
+        l l             short log
+        P               push
+        F               pull
+        b b             switch branch
+
+** smerge
+	C-c ^ RET       keep-current
+	C-c ^ C         combine-with-next
+	C-c ^ E         ediff
+	C-c ^ R         refine
+	C-c ^ a         keep all
+	C-c ^ u         keep upper (mine:  C-c ^ m)
+	C-c ^ l         keep lower (other: C-c ^ o)
+	C-c ^ b         keep base
+	C-c ^ n         next conflict
+	C-c ^ p         prev
+
+** dired
+        m               mark
+        u               unmark
+        U               unmark all
+        t               toggle marks
+        % m             mark by regex
+        * */@           mark executable, dirs, symlinks
+        * .		mark by ext (+)
+
+        (               hide/show details
+
+        C               copy file
+        R               rename file
+        d               flag for delete
+        x               delete flagged
+        + 		create dir
+        F		open all marked files (+)
+
+        ^               goto parent, in current buffer
+        a               goto directory, in current buffer
+        <ret>           goto directory, in current buffer
+        f               goto, in new buffer
+        o               goto, in other window
+        v               view file
+
+        i               insert subdir
+        $               remove subdir
+        M-$             remove all subdirs
+        C-M-u           goto parent dir
+
+        A               search
+        Q               query replace - replace text in marked files : ! Y (?) to accept all, y/n/e/u ...
+
+        C-x C-q         make editable; C-c C-c to end
+
+        <tab>           toggle directory subtree
+
+        / /		remove filter
+	/ !		not
+	/ n		name
+	/ r		regex
+	/ .		ext
+	/ h		dotfiles
+	/ o		omit (dired-omit-regexp)
+	/ g		garbage (dired-garbage-files-regexp)
+	/ f		file
+	/ m		mode
+	/ x		exec
+	/ ig            gitignored
+
+
+** ibuffer
+        m               mark
+        u               unmark
+        U               unmark all
+        * u             mark unsaved buffers
+        * M             mark by major mode
+        * s		mark all '* name *' buffers
+
+        % n             mark by name regex
+        % f             mark by filename regex
+        % g             mark by content regex
+
+        b               bury
+        d               flag for delete
+        S               save marked
+        D               kill marked
+        V               revert marked
+        Q               query replace in marked
+        k               remove from view
+
+        =               diff buffer - saved file
+
+        ,               change sort mode
+        s i             reverse order
+        s a             sort alpha
+        s f             sort filename
+        s m             sort major mode
+
+        / *             filter * buffers
+        / !             invert filter
+        / m             filter by mode
+        / n             filter by name
+        / F             filter by directory
+        / f             filter by filename
+        / .             filter by extension
+        / i             filter by modified
+
+        / p             remove top filter
+        / /             remove all filters
+
+        / * / !         hide * buffers
+
+** proced
+        C               mark children
+        P               mark parent
+        o               hide unmarked
+        <ret>           refine - filter by thing at point
+        F               change format
+
+** project
+        C-x p p         switch project
+        C-x p f         find file in project
+        C-x p d         dired in project root
+        C-x p c         compile
+        C-x p b         switch buffer in project
+        C-x p k         kill all buffers in project
+
+** wgrep
+        C-c C-p         toggle editable
+        C-c C-e         apply changes
+        C-c C-k         ignore changes, and exit
+
+        M-x wgrep-save-all-buffers      save modified buffers
+
+
+* Notes
+
+(set-window-fringes nil 0 8 nil t) ; set fringes for this window
+
+(setq hippie-expand-try-functions-list
+  '(try-expand-dabbrev
+  try-expand-dabbrev-all-buffers
+  try-expand-dabbrev-from-kill
+  try-complete-file-name-partially
+  try-complete-file-name
+  try-expand-all-abbrevs
+  try-expand-list
+  try-expand-line
+  try-complete-lisp-symbol-partially
+  try-complete-lisp-symbol))
+
+
+;; bug? does not properly right align
+(add-to-list 'tab-bar-format 'tab-bar-format-align-right t)
+(add-to-list 'tab-bar-format 'tab-bar-format-global t)
+(display-battery-mode 1)
+(display-time-mode 1)
+
+(text-properties-at (point))
+(face-all-attributes 'face-foobar)
+(face-attribute 'face-foobar :width)
+
+#+TODO: TODO TEST WAIT | DONE(d!@)
+#   !=timestamp, @=ask for note
+#+begin_src ruby :var xx=37
+[1, 2, 3, xx].map{ |x| 2 * x }
+#+end_src
+:name:
+hidden drawer content
+:end:
+
+** spreadsheet
+ @row $col
+ @< first ; @> last; @>> next to last; @>>> ...
+
+
+#+begin_src emacs-lisp
+
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
+
+(setq mode-line-format (butlast mode-line-format 1))
+
+(set-face-attribute 'default (selected-frame) :font "Victor Mono-12:weight=semi-bold")
+(set-face-attribute 'default (selected-frame) :font "Fira Code-12"   :weight 'normal)
+(set-face-attribute 'default (selected-frame) :font "mononoki-13")
+(set-face-attribute 'default (selected-frame) :font "Lotion-14")
+(set-face-attribute 'default (selected-frame) :font "Monofur-15")
+(set-face-attribute 'default (selected-frame) :font "JetBrains Mono-12")
+
+(face-attribute face attribute)
+(face-all-attributes 'default)
+
+(defhydra hydra-zoom (global-map "C-c w")
+  "zoom window"
+  ( "<left>"  (lambda () (interactive) (jaw-zoom-width+    1)) "+w")
+  ( "<right>" (lambda () (interactive) (jaw-zoom-width+   -1)) "-w")
+  ( "<up>"    (lambda () (interactive) (jaw-zoom-height+   1)) "+h")
+  ( "<down>"  (lambda () (interactive) (jaw-zoom-height+  -1)) "-h"))
+
+
+;; icons in dired?
+(straight-use-package 'all-the-icons)
+(straight-use-package 'all-the-icons-dired)
+(all-the-icons-install-fonts)
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(setq all-the-icons-dired-monochrome nil)
+
+;; ivy?
+(when (fboundp 'ivy-define-key)
+  (ivy-define-key ivy-minibuffer-map (kbd "TAB") #'ivy-partial))
+
+#+end_src
+
+#+BEGIN_SRC restclient
+  GET http://www.tcp4me.com
+Authorization: booger
+{ foo: 1
+  bar: 2
+}
+#+END_SRC
+
+see also https://github.com/zweifisch/ob-http
+
+
+** graphics
+
+#+STARTUP: inlineimages
+
+#+begin_src gnuplot :exports code :file file.svg
+reset
+
+#:file file.png
+#set term png transparent truecolor
+
+set size ratio 0.5
+# change a color of border.
+set border lw 3 lc rgb "white"
+
+# change text colors of  tics
+set xtics textcolor rgb "white"
+set ytics textcolor rgb "white"
+
+# change text colors of labels
+set xlabel "X label" textcolor rgb "white"
+set ylabel "Y label" textcolor rgb "white"
+set title  "Title"   textcolor rgb "white"
+set key textcolor rgb "white"
+
+set xrange [0:7]
+plot sin(x) w l lc rgb "#dddd22"
+#+end_src
+
+#+RESULTS:
+[[file:file.svg]]
+
+#+begin_src dot :file dot.svg
+digraph {
+  bgcolor="transparent";
+  // graph from left to right
+  rankdir=LR;
+  splines=true;
+  node [shape=box];
+
+  id [label="Install Graphviz" color="green"]
+  conf [label="Configure org-babel"]
+  dot [label="DOT in org-mode"]
+
+  id -> conf [color="blue"]
+  conf -> dot
+  dot -> "Profit"
+  dot -> "Success" [style=dotted]
+}
+
+#+end_src
+
+#+RESULTS:
+[[file:dot.svg]]
+#+begin_src pikchr :darkmode  :file filepic.svg
+fontscale = 1.25
+margin    = 2mm
+circle "words"
+arrow
+box "images" rad 0.2 fill 0x000088
+#+end_src
+
+#+RESULTS:
+[[file:filepic.svg]]

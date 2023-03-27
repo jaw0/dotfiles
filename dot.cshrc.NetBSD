@@ -1,0 +1,8 @@
+
+alias newslog	'tail -f /news/logs/logs/news-stats | awk '"'"'{print $4,$3}'"'"
+
+setenv EXPORTABLE_SYSTEM 1
+setenv NOLINT 1
+unlimit maxproc
+unlimit datasize
+

@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Author: Jeff Weisberg <jaw @ tcp4me.com>
+# bootstrap new dotfiles
+# copy+paste the following:
+
+cd $HOME
+git clone git.tcp4me.com:github/dotfiles
+dotfiles/install
+

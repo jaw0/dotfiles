@@ -1,0 +1,8 @@
+. ~/.bashrc
+
+################################################################
+# disable highlighting copy+pasted text
+bind 'set enable-bracketed-paste off'
+
+# disable context-sensitive auto-complete
+complete -r
